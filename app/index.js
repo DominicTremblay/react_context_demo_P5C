@@ -1,27 +1,10 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
-import axios from 'axios'
-import { useEffect } from 'react'
+import useData from '../hooks/useData'
 
 export default function App() {
-  const requeteFilms = async () => {
-    const urlBase = `http://localhost:5000/api`
-
-    try {
-      const reponse = await axios({
-        method: 'GET',
-        url: `${urlBase}/films`,
-      })
-
-      console.log(reponse.data)
-    } catch (e) {
-      console.log(`Erreur: ${e.message}`)
-    }
-  }
-
-  useEffect(() => {
-    requeteFilms()
-  }, [])
+ 
+  useData();
 
   return (
     <View style={styles.container}>
