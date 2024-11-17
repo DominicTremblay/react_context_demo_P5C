@@ -2,24 +2,24 @@ import { router, useRouter } from 'expo-router'
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { List, Card, Button } from 'react-native-paper'
+import { films } from '../../data/films'
 
 const Films = () => {
+  const router = useRouter()
 
-  const router = useRouter();
-
-  return (
-    <ScrollView>
-      <Card style={styles.cardStyle}>
-        <Card.Title title="LE FILM" />
+  const listeFilms = films.map(
+    ({ id, titre, image_url: imageUrl, genre, annee_sortie: anneeSortie }) => (
+      <Card key={id} style={styles.cardStyle}>
+        <Card.Title title={titre} />
         <Card.Cover
           style={styles.cardCover}
-          source={{ uri: 'https://picsum.photos/700' }}
+          source={{ uri: imageUrl }}
         />
         <Card.Content>
           <List.Section>
             <List.Item
               title="Annee de sortie: "
-              description="2024"
+              description={anneeSortie}
               left={(props) => (
                 <List.Icon {...props} icon="square-medium-outline" />
               )}
@@ -27,7 +27,7 @@ const Films = () => {
 
             <List.Item
               title="Genre: "
-              description="Action"
+              description={genre}
               left={(props) => (
                 <List.Icon {...props} icon="square-medium-outline" />
               )}
@@ -35,60 +35,16 @@ const Films = () => {
           </List.Section>
 
           <Card.Actions>
-            <Button onPress={()=> router.push(`/films/1`)}>Voir description</Button>
+            <Button onPress={() => router.push(`/films/${id}`)}>
+              Voir description
+            </Button>
           </Card.Actions>
         </Card.Content>
       </Card>
-      <Card>
-        <Card.Title title="LE FILM" />
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Content>
-          <List.Section>
-            <List.Item
-              title="Description: "
-              description="Film a propos de"
-              left={(props) => <List.Icon {...props} icon="folder" />}
-            />
-            <List.Item
-              title="Annee de sortie: "
-              description="2024"
-              left={(props) => <List.Icon {...props} icon="folder" />}
-            />
-
-            <List.Item
-              title="Genre: "
-              description="Action"
-              left={(props) => <List.Icon {...props} icon="folder" />}
-            />
-          </List.Section>
-        </Card.Content>
-      </Card>
-      <Card>
-        <Card.Title title="LE FILM" />
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Content>
-          <List.Section>
-            <List.Item
-              title="Description: "
-              description="Film a propos de"
-              left={(props) => <List.Icon {...props} icon="suare" />}
-            />
-            <List.Item
-              title="Annee de sortie: "
-              description="2024"
-              left={(props) => <List.Icon {...props} icon="folder" />}
-            />
-
-            <List.Item
-              title="Genre: "
-              description="Action"
-              left={(props) => <List.Icon {...props} icon="folder" />}
-            />
-          </List.Section>
-        </Card.Content>
-      </Card>
-    </ScrollView>
+    )
   )
+
+  return <ScrollView>{listeFilms}</ScrollView>
 }
 
 const styles = StyleSheet.create({
