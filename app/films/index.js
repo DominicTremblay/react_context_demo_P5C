@@ -1,7 +1,7 @@
 import { router, useRouter } from 'expo-router'
 import React, { useContext } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
-import { List, Card, Button } from 'react-native-paper'
+import { List, Card, Button, ActivityIndicator } from 'react-native-paper'
 import { StateContext, useStateValue } from '../../context/StateContext'
 
 const Films = () => {
@@ -42,6 +42,10 @@ const Films = () => {
       </Card>
     )
   )
+
+  if (state.loading) {
+    return <ActivityIndicator size="large" color='#0000ff' />
+  }
 
   return <ScrollView>{listeFilms}</ScrollView>
 }
