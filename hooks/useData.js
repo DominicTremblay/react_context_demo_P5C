@@ -18,7 +18,7 @@ const useData = () => {
       })
 
       console.log(reponse.data)
-      dispatch({ type: CHARGER_FILMS, payload: result.data })
+      dispatch({ type: CHARGER_FILMS, payload: reponse.data })
     } catch (e) {
       console.log(`Erreur: ${e.message}`)
     }
