@@ -4,7 +4,7 @@ import useData from '../hooks/useData'
 
 export default function App() {
  
-  useData();
+ const [state, dispatch] = useData();
 
   return (
     <View style={styles.container}>
