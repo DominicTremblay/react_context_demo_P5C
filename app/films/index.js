@@ -1,20 +1,18 @@
 import { router, useRouter } from 'expo-router'
-import React from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { List, Card, Button } from 'react-native-paper'
-import { films } from '../../data/films'
+import { useStateValue } from '../../context/StateContext'
 
 const Films = () => {
   const router = useRouter()
 
-  const listeFilms = films.map(
+  const { state, dispatch } = useStateValue()
+
+  const listeFilms = state.films.map(
     ({ id, titre, image_url: imageUrl, genre, annee_sortie: anneeSortie }) => (
       <Card key={id} style={styles.cardStyle}>
         <Card.Title title={titre} />
-        <Card.Cover
-          style={styles.cardCover}
-          source={{ uri: imageUrl }}
-        />
+        <Card.Cover style={styles.cardCover} source={{ uri: imageUrl }} />
         <Card.Content>
           <List.Section>
             <List.Item
