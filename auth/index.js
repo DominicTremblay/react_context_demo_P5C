@@ -3,14 +3,15 @@ import { FERMER_SESSION } from '../reducer/dataReducer'
 
 export const ourvrirSession = async (dispatch, identification) => {
   const urlBase = `http://localhost:5000/api`
+
   try {
     const reponse = await axios({
       url: `${urlBase}/session`,
-      method: 'GET',
-      body: JSON.stringify({
-        courriel: 'asterix@gmail.com',
-        motPasse: 'toutatis',
-      }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: identification,
     })
 
     console.log('Reponse sesson: ', reponse.data)
