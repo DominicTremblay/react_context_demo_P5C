@@ -9,7 +9,7 @@ const dataReducer = (state = {}, action) => {
         ...state,
         auth: { estAuthentifie: true, utilisateur: action.payload },
       }
-    case LOGOUT:
+    case FERMER_SESSION:
       return {
         ...state,
         auth: { estAuthentifie: false, utilisateur: null },
