@@ -3,9 +3,14 @@ import useData from '../hooks/useData'
 
 export const StateContext = createContext(null)
 
-export const StateProvider = ({ children }) => {
-  const [state, dispatch] = useData()
+const etatInitial = {
+  auth: { estAuthentifie: false, utilisateur: null },
+  films: [],
+  loading: true,
+}
 
+export const StateProvider = ({ children }) => {
+  const [state, dispatch] = useData(etatInitial)
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
@@ -13,6 +18,3 @@ export const StateProvider = ({ children }) => {
     </StateContext.Provider>
   )
 }
-
-
-

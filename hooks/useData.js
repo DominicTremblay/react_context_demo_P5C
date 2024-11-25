@@ -2,11 +2,8 @@ import axios from 'axios'
 import { useEffect, useReducer } from 'react'
 import dataReducer, { CHARGER_FILMS } from '../reducer/dataReducer'
 
-const useData = () => {
-  const [state, dispatch] = useReducer(dataReducer, {
-    films: [],
-    loading: true,
-  })
+const useData = (etatInitial) => {
+  const [state, dispatch] = useReducer(dataReducer, etatInitial)
 
   const requeteFilms = async () => {
     const urlBase = `http://localhost:5000/api`
