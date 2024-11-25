@@ -1,12 +1,24 @@
+export const OUVRIR_SESSION = 'OUVRIR_SESSION'
+export const FERMER_SESSION = 'FERMER_SESSION'
 export const CHARGER_FILMS = 'CHARGER_FILMS'
 
 const dataReducer = (state = {}, action) => {
   switch (action.type) {
+    case OUVRIR_SESSION:
+      return {
+        ...state,
+        auth: { estAuthentifie: true, utilisateur: action.payload },
+      }
+    case LOGOUT:
+      return {
+        ...state,
+        auth: { estAuthentifie: false, utilisateur: null },
+      }
     case CHARGER_FILMS:
       return {
         ...state,
         films: action.payload,
-        loading: false
+        loading: false,
       }
 
     default:
