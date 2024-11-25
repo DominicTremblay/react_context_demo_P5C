@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FERMER_SESSION } from '../reducer/dataReducer'
+import { FERMER_SESSION, OUVRIR_SESSION } from '../reducer/dataReducer'
 
 export const ourvrirSession = async (dispatch, identification) => {
   const urlBase = `http://localhost:5000/api`
@@ -14,7 +14,8 @@ export const ourvrirSession = async (dispatch, identification) => {
       data: identification,
     })
 
-    console.log('Reponse sesson: ', reponse.data)
+    console.log('Reponse session: ', reponse.data)
+    dispatch({ type: OUVRIR_SESSION, payload: reponse.data.utilisateur })
   } catch (erreur) {
     console.log(`Erreur session: ${erreur.message}`)
   }
