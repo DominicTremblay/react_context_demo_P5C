@@ -15,7 +15,7 @@ export const ourvrirSession = async (dispatch, identification) => {
     })
 
     console.log('Reponse session: ', reponse.data)
-    dispatch({ type: OUVRIR_SESSION, payload: reponse.data.utilisateur })
+    dispatch({ type: OUVRIR_SESSION, payload: reponse.data })
   } catch (erreur) {
     console.log(`Erreur session: ${erreur.message}`)
   }
