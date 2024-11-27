@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Feather from '@expo/vector-icons/Feather'
 import Fontisto from '@expo/vector-icons/Fontisto'
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { StateContext, StateProvider } from '../context/StateContext'
 import MessageErreur from '../components/messageErreur'
 import OuvrirSession from './session'
@@ -47,10 +47,10 @@ const Layout = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="session"
+            <Tabs.Screen
+        name="session/index"
         options={{
-          title: 'Ouvrir session',
+          title: 'Collection de films',
           tabBarIcon: ({ color }) => (
             <AntDesign name="login" size={24} color={color} />
           ),

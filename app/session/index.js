@@ -15,7 +15,6 @@ const OuvrirSession = () => {
       courriel,
       mot_passe: motPasse,
     }
-    console.log('Soumettre', identification)
 
     ourvrirSession(dispatch, identification)
 
