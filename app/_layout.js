@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Feather from '@expo/vector-icons/Feather'
 import Fontisto from '@expo/vector-icons/Fontisto'
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { StateContext, StateProvider } from '../context/StateContext'
 import MessageErreur from '../components/messageErreur'
 import OuvrirSession from './session'
@@ -43,6 +44,15 @@ const Layout = () => {
           title: 'Collection de films',
           tabBarIcon: ({ color }) => (
             <Fontisto name="film" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="session"
+        options={{
+          title: 'Ouvrir session',
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="login" size={24} color={color} />
           ),
         }}
       />

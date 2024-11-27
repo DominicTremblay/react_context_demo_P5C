@@ -1,13 +1,18 @@
 import { router, useRouter } from 'expo-router'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import { List, Card, Button, ActivityIndicator } from 'react-native-paper'
 import { StateContext, useStateValue } from '../../context/StateContext'
+import { CHARGER_FILMS } from '../../reducer/dataReducer'
+import axios from 'axios'
+import useFilms from '../../hooks/useFilms'
 
 const Films = () => {
   const router = useRouter()
 
- const {state, dispatch} = useContext(StateContext);
+  const { state, dispatch } = useContext(StateContext)
+
+  useFilms();
 
   const listeFilms = state.films.map(
     ({ id, titre, image_url: imageUrl, genre, annee_sortie: anneeSortie }) => (
@@ -44,7 +49,7 @@ const Films = () => {
   )
 
   if (state.loading) {
-    return <ActivityIndicator size="large" color='#0000ff' />
+    return <ActivityIndicator size="large" color="#0000ff" />
   }
 
   return <ScrollView>{listeFilms}</ScrollView>

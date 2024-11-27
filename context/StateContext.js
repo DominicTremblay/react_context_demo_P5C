@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react'
-import useData from '../hooks/useData'
+import { createContext, useReducer } from 'react'
+import dataReducer from '../reducer/dataReducer'
 
 export const StateContext = createContext(null)
 
@@ -10,7 +10,7 @@ const etatInitial = {
 }
 
 export const StateProvider = ({ children }) => {
-  const [state, dispatch] = useData(etatInitial)
+  const [state, dispatch] = useReducer(dataReducer, etatInitial)
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
