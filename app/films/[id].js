@@ -1,56 +1,87 @@
 import { useLocalSearchParams, useRouter } from 'expo-router'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { films } from '../../data/films'
-import { List, Card, Button } from 'react-native-paper'
+import { List, Card, Button, ActivityIndicator } from 'react-native-paper'
+import axios from 'axios'
+import { StateContext } from '../../context/StateContext'
 
 const Film = () => {
   const { id } = useLocalSearchParams()
 
   const router = useRouter()
 
-  const filmTrouve = films.find((film) => film.id === Number(id))
+  const { state, dispatch } = useContext(StateContext)
+
+  const [film, setFilm] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const requeteFilm = async () => {
+    const urlBase = `http://localhost:5000/api`
+
+    try {
+      const reponse = await axios({
+        method: 'GET',
+        url: `${urlBase}/films/${id}`, // Pass `id` dynamically
+        headers: {
+          Authorization: `Bearer ${state.auth.utilisateur.jeton}`,
+        },
+      })
+
+      console.log(reponse.data)
+      setFilm(reponse.data)
+    } catch (e) {
+      console.log(`Erreur: ${e.message}`)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    requeteFilm()
+  }, [])
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
 
   return (
-    <Card style={styles.cardStyle}>
-      <Card.Title title={filmTrouve.titre} />
-      <Card.Cover
-        style={styles.cardCover}
-        source={{ uri: filmTrouve.image_url }}
-      />
-      <Card.Content>
-        <List.Section>
+    film && (
+      <Card style={styles.cardStyle}>
+        <Card.Title title={film.titre} />
+        <Card.Cover style={styles.cardCover} source={{ uri: film.image_url }} />
+        <Card.Content>
+          <List.Section>
+            <List.Item
+              title="Description: "
+              description={film.description}
+              left={(props) => (
+                <List.Icon {...props} icon="square-medium-outline" />
+              )}
+            />
 
-        <List.Item
-            title="Description: "
-            description={filmTrouve.description}
-            left={(props) => (
-              <List.Icon {...props} icon="square-medium-outline" />
-            )}
-          />
+            <List.Item
+              title="Annee de sortie: "
+              description={film.annee_sortie}
+              left={(props) => (
+                <List.Icon {...props} icon="square-medium-outline" />
+              )}
+            />
 
-          <List.Item
-            title="Annee de sortie: "
-            description={filmTrouve.annee_sortie}
-            left={(props) => (
-              <List.Icon {...props} icon="square-medium-outline" />
-            )}
-          />
+            <List.Item
+              title="Genre: "
+              description={film.genre}
+              left={(props) => (
+                <List.Icon {...props} icon="square-medium-outline" />
+              )}
+            />
+          </List.Section>
 
-          <List.Item
-            title="Genre: "
-            description={filmTrouve.genre}
-            left={(props) => (
-              <List.Icon {...props} icon="square-medium-outline" />
-            )}
-          />
-        </List.Section>
-
-        <Card.Actions>
-          <Button onPress={() => router.navigate(`/films`)}>Retour</Button>
-        </Card.Actions>
-      </Card.Content>
-    </Card>
+          <Card.Actions>
+            <Button onPress={() => router.navigate(`/films`)}>Retour</Button>
+          </Card.Actions>
+        </Card.Content>
+      </Card>
+    )
   )
 }
 

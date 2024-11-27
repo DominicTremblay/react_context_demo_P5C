@@ -1,6 +1,7 @@
 export const OUVRIR_SESSION = 'OUVRIR_SESSION'
 export const FERMER_SESSION = 'FERMER_SESSION'
 export const CHARGER_FILMS = 'CHARGER_FILMS'
+export const CHARGER_FILM_ID = 'CHARGER_FILM_ID'
 
 const dataReducer = (state = {}, action) => {
   switch (action.type) {

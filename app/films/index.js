@@ -12,7 +12,7 @@ const Films = () => {
 
   const { state, dispatch } = useContext(StateContext)
 
-  useFilms();
+  useFilms(CHARGER_FILMS);
 
   const listeFilms = state.films.map(
     ({ id, titre, image_url: imageUrl, genre, annee_sortie: anneeSortie }) => (
