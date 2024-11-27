@@ -1,88 +1,39 @@
-import React, { useState, useContext } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { Button, TextInput } from 'react-native-paper'
+import React, { useState, useContext, useEffect } from 'react'
 import { StateContext } from '../../context/StateContext'
 import { ourvrirSession } from '../../auth'
+import { Redirect} from 'expo-router'
+import MessageErreur from '../../components/messageErreur'
+import FrmSession from '../../components/frmSession'
 
 const OuvrirSession = () => {
   const { state, dispatch } = useContext(StateContext)
 
-  const [courriel, setCourriel] = useState('')
-  const [motPasse, setMotPasse] = useState('')
+  const [erreur, setErreur] = useState(null)
 
-  const gererSoumettre = () => {
+  const soumettreIdentification = async (courriel, motPasse) => {
     const identification = {
       courriel,
       mot_passe: motPasse,
     }
 
-    ourvrirSession(dispatch, identification)
+    const erreur = await ourvrirSession(dispatch, identification)
 
-    setCourriel('')
-    setMotPasse('')
+    setErreur(erreur)
   }
 
-  return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 24 }}>Ouvrir une session</Text>
+  if (state.auth.estAuthentifie) {
+    return <Redirect href='/films' />
+  }
 
-      <View>
-        <TextInput
-          style={styles.champs}
-          label="Courriel"
-          mode="outlined"
-          outlineStyle={{
-            borderRadius: 10,
-            borderColor: 'lightblue',
-          }}
-          placeholder="Courriel"
-          value={courriel}
-          onChangeText={(text) => setCourriel(text)}
-        />
+  if (erreur) {
+    return (
+      <MessageErreur message={erreur}>
+        <FrmSession soumettreIdentification={soumettreIdentification} />
+      </MessageErreur>
+    )
+  }
 
-        <TextInput
-          style={styles.champs}
-          label="Mot de passe"
-          mode="outlined"
-          outlineStyle={{
-            borderRadius: 10,
-            borderColor: 'lightblue',
-          }}
-          placeholder="Mot de passe"
-          secureTextEntry={true}
-          value={motPasse}
-          onChangeText={(text) => setMotPasse(text)}
-        />
-      </View>
-
-      <Button
-        style={styles.bouton}
-        mode="elevated"
-        dark={true}
-        buttonColor="lightblue"
-        onPress={() => gererSoumettre()}
-      >
-        Ouvrir la session
-      </Button>
-    </View>
-  )
+  return <FrmSession soumettreIdentification={soumettreIdentification} />
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-  },
-  champs: {
-    width: 300,
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  bouton: {
-    marginTop: 20,
-    width: 200,
-  },
-})
 
 export default OuvrirSession

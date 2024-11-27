@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router'
 import React, { useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Feather from '@expo/vector-icons/Feather'
 import Fontisto from '@expo/vector-icons/Fontisto'
 import AntDesign from '@expo/vector-icons/AntDesign'
@@ -47,14 +47,31 @@ const Layout = () => {
           ),
         }}
       />
-            <Tabs.Screen
+      <Tabs.Screen
         name="session/index"
-        options={{
-          title: 'Collection de films',
+        options={({ navigation }) => ({
+          title: state.auth.estAuthentifie ? 'Fermer session' : 'Ouvrir session',
           tabBarIcon: ({ color }) => (
-            <AntDesign name="login" size={24} color={color} />
+            <AntDesign
+              name={state.auth.estAuthentifie ? 'logout' : 'login'}
+              size={24}
+              color={color}
+            />
           ),
-        }}
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              {...props}
+              onPress={() => {
+                if (state.auth.estAuthentifie) {
+                  // Logout logic
+                  dispatch({ type: 'FERMER_SESSION' })
+                } else {
+                  navigation.navigate('session')
+                }
+              }}
+            />
+          ),
+        })}
       />
     </Tabs>
   )
